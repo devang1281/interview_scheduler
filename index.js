@@ -2,8 +2,8 @@ const CalendarTemplate = require('./calendar/calendar_template')
 let schedule = require('./calendar/get_Schedule')
 let common_time = require('./scheduling/candidate_panelist')
 
-let noOfPanelist=2;
-let noOfCandidate=1;
+let noOfPanelist=1;
+let noOfCandidate=3;
 let panelist=[];
 let candidate=[];
 
