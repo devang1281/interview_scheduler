@@ -12,31 +12,41 @@ function common_time(panelist,candidate) {
     // console.log(panelistUTC[0],panelistUTC[1])
     // console.log(candidateUTC[0])
     let total = panelist.length + candidate.length;
-    let candidateFlag = true;
+    let candidateFlag ;
+    let candidateFreeTime = [];
     let allFlag = true;
-    for (let iter2=0;iter2<48;iter2++) {
-        candidateFlag = true && candidateFlag;
-        for (let iter = 0; iter < candidate.length;iter++) { 
-            if (iter+1<candidate.length) {
-                if(candidate[iter].availablity[candidateUTC[iter].j][candidateUTC[iter].i] === "Free") {
-                    if(candidate[iter].availablity[candidateUTC[iter].j][candidateUTC[iter].i]===candidate[iter+1].availablity[candidateUTC[iter+1].j][candidateUTC[iter+1].i]) {
-                        candidateFlag=true;
-                        console.log(iter,iter2,candidate[iter].availablity[candidateUTC[iter].j][candidateUTC[iter].i])
-                        // break;
+    let no=0;
+
+    // Checking Candidate Time Table
+    if (candidate.length>1)
+    for (let time=0;time<48;time++) {
+        candidateFlag = true ;                  //CandidateFlag == true meaning common candidate slot available
+        for (no = 0; no < candidate.length;no++) {
+            if (no+1<candidate.length) {
+                if(candidate[no].availablity[candidateUTC[no].j][candidateUTC[no].i] === "Free") {
+                    if(candidate[no+1].availablity[candidateUTC[no+1].j][candidateUTC[no+1].i]==="Free") {
+                        candidateFlag=true && candidateFlag;
+                        console.log(no,time,candidate[no].availablity[candidateUTC[no].j][candidateUTC[no].i],candidateUTC[0].j,candidateUTC[0].i)
                     } else {
                         candidateFlag=false
                     }
+                } else {
+                    candidateFlag=false
                 }
+            }
+            candidateUTC[no].i +=1;
+            if (candidateUTC[no].i==48){
+                candidateUTC[no].j +=1;
+                candidateUTC[no].i=0;
             }
         }
         if (candidateFlag ==true){
-            console.log(iter2,candidate[0].availablity[candidateUTC[0].j][candidateUTC[0].i]);
-            break;
-        } /* else {
-            candidateFlag==true;
-        } */
+            // console.log(time,candidate[0].availablity[candidateUTC[0].j][candidateUTC[0].i-1],candidateUTC[0].j,candidateUTC[0].i-1);
+            // break;
+            candidateFreeTime.push(time);
+        }
     }
-
+    console.log(candidateFreeTime);
 }
 
 module.exports = common_time;
